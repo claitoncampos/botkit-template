@@ -5,18 +5,27 @@
 // user: Terá algumas opções para interação com o bot
 //
 
-const { BotkitConversation } = require( 'botkit' );
+    const { BotkitConversation } = require( 'botkit' );
 
-module.exports = function (controller) {
+    module.exports = function( controller ) {
 
-    controller.hears( [ 'Ola','ola','OLA','ei','bom dia','sam','Sam','SAM' ], 'message,direct_message', async ( bot,message ) => {
+        const convo = new BotkitConversation( 'sam_chat', controller );
 
-        await bot.reply( message,'Ola!' );
-//        await bot.reply( message, { markdown: 'Try `help` to see available commands' } );
-      });
+        convo.say( 'Ola, eu sou o S.A.M, seu assistente pessoal' );
+        convo.ask(
+            'Em que posso lhe ajudar?',
+            async( answer, convo, bot ) => {},
+            'stated_color'
+        );
+        convo.say( `Cool, I like {{ vars.stated_color }} too!` );
 
-    const convo = new BotkitConversation( 'sam_chat', controller );
+        controller.addDialog( convo );
 
-    convo.say( 'Ola, eu sou o S.A.M, seu assistente pessoal' );
+        controller.hears( 'color', 'message,direct_message', async( bot, message ) => {
 
-}
+            await bot.beginDialog( 'sam_chat' );
+        });
+
+        controller.commandHelp.push( { command: 'color', text: 'Pick a favorite color (Botkit conversations)' } );
+
+    }
