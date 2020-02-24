@@ -15,17 +15,17 @@
         convo.ask(
             'Em que posso lhe ajudar?',
             async( answer, convo, bot ) => {},
-            'stated_color'
+            'stated_sam'
         );
-        convo.say( `Cool, I like {{ vars.stated_color }} too!` );
+        convo.say( `Cool, I like {{ vars.stated_sam }} too!` );
 
         controller.addDialog( convo );
 
-        controller.hears( 'color', 'message,direct_message', async( bot, message ) => {
+        controller.hears( 'sam', 'message,direct_message', async( bot, message ) => {
 
             await bot.beginDialog( 'sam_chat' );
         });
 
-        controller.commandHelp.push( { command: 'color', text: 'Pick a favorite color (Botkit conversations)' } );
+        controller.commandHelp.push( { command: 'sam', text: 'Pick a favorite sam (Botkit conversations)' } );
 
     }
