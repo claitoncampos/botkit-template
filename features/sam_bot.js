@@ -4,28 +4,31 @@
 // bot: Em que posso ajudar?
 // user: Terá algumas opções para interação com o bot
 //
+module.exports = function (controller) {
 
-    const { BotkitConversation } = require( 'botkit' );
+    controller.hears( 'sam', 'Sam', 'bom dia', 'ola', 'Ola', 'Bom dia', 'direct_message', function (bot, message) {
 
-    module.exports = function( controller ) {
+        bot.startConversation(message, function ( (err, convo)) {
 
-        const convo = new BotkitConversation( 'sam_chat', controller );
+            var question = "O que você gostaria de verificar?";
+            question += "<br/> `1)` Verificar o status da rede (**rede**)";
+            question += "<br/> `2)` Total de pessoas conectadas no Wi-Fi (**wifi**)";
+            question += "<br/> `3)` Temperatuda da loja (**loja**)";
+            question += "<br/> `4)` Iluminacao (**iluminacao**)";
+            question += "\n\O que voce gostaria de fazer?<br/>_(Digite um numero, escreva a **palavra chave** ou" +
+                "apenas escreva cancel)_";
+            convo.ask(question, [
+                {
+                    pattern: "1|rede|status",
+                    callback: function (response, convo) {
+                        convo.say("Um momento por favor, estou coletando todas as informacoes");
+                        convo.next();
+                    },
+                }
+            ])
 
-        convo.say( 'Ola, eu sou o S.A.M, seu assistente pessoal' );
-        convo.ask(
-            'Em que posso lhe ajudar?',
-            async( answer, convo, bot ) => {},
-            'stated_sam'
-        );
-        convo.say( `Cool, I like {{ vars.stated_sam }} too!` );
+        })
 
-        controller.addDialog( convo );
+    } )
 
-        controller.hears( 'sam', 'message,direct_message', async( bot, message ) => {
-
-            await bot.beginDialog( 'sam_chat' );
-        });
-
-        controller.commandHelp.push( { command: 'sam', text: 'Pick a favorite sam (Botkit conversations)' } );
-
-    }
+}
