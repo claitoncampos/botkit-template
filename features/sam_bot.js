@@ -8,7 +8,7 @@ module.exports = function (controller) {
 
     controller.hears( 'sam', 'Sam', 'bom dia', 'ola', 'Ola', 'Bom dia', 'direct_message', function (bot, message) {
 
-        bot.startConversation(message, function ( (err, convo)) {
+        bot.startConversation(message, function (err, convo){
 
             var question = "O que você gostaria de verificar?";
             question += "<br/> `1)` Verificar o status da rede (**rede**)";
@@ -23,7 +23,7 @@ module.exports = function (controller) {
                     callback: function (response, convo) {
                         convo.say("Um momento por favor, estou coletando todas as informacoes");
                         convo.next();
-                    },
+                    }
                 }
             ])
 
