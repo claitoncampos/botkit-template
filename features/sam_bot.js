@@ -11,33 +11,73 @@ module.exports = function ( controller) {
     const convo = new BotkitConversation( 'sam_chat', controller);
 
     convo.say( 'Ola, eu sou o S.A.M, seu assistente pessoal' );
-    convo.ask( 'O que voce gostaria de verificar?',
-        async (answer, convo, bot) => {},
-        'stated_sam'
-    );
 
-    let question = 'Tenho algumas opcoes para lhe apresentar:\n';
-    question += ' 1. Verificar o status da rede wi-fi (rede)\n';
-    question += ' 2. Verificar quantidade de pessoas logadas na rede wi-fi (pessoas)\n';
-    question += ' 3. Verificar a temperatura da loja (temperatura)\n';
-    question += ' 4. Verificar a iluminacao da loja (iluminacao)\n';
-    question += ' Para verificar qualquer das opcoes, digite o numero ou a palavra entre parenteses ou stop';
+    let question = 'O que voce gostaria de verificar?:\n';
+    question += '  1. Verificar se a rede wi-fi esta ativa: (rede)\n';
+    question += '  2. Verificar a quantidade de pessoas logadas na rede wi-fi: (pessoas)\n';
+    question += '  3. Verificar a temperatuda da loja: (temperatura)\n';
+    question += 'O que voce gostaria de ver?\n(Digite um numero, ou (palavra) or "stop")';
 
     convo.ask( question, [
         {
-            pattern: '1|rede|status',
+            pattern: '1|rede',
             handler: async (response, convo, bot) => {
-                await convo.gotoThread( 'menu_1');
+                await convo.gotoThread( 'menu_1' );
             }
         },
+        {
+            pattern: '2|pessoas',
+            handler: async (response, convo, bot) => {
+                await convo.gotoThread( 'menu_2' );
+            }
+        },
+        {
+            pattern: '3|temperatura',
+            handler: async (response, convo, bot) => {
+                await convo.gotoThread( 'menu_3' );
+            }
+        },
+        {
+            pattern: 'cancel|stop',
+            handler: async (response, convo, bot) => {
+                await convo.gotoThread( 'action_cancel' );
+            }
+        },
+        {
+            default: true,
+            handler: async (response, convo, bot) => {
+                await bot.say( 'Unrecognized response...  \nTry again!' );
+                await convo.repeat();
+            },
+        }
     ]);
 
     // Menu option 1)
     convo.addMessage({
-        text: 'Ok, um momento enquanto coleto todas as informacoes necessarias',
+        text: 'Ok, por favor aguarde enquanto verifico o status da rede',
         action: 'default'
     }, 'menu_1');
-};
+
+    // Menu option 2)
+    convo.addMessage({
+        text: 'Learnings Labs are step-by-step tutorials. ' +
+            'They are grouped into tracks to help you on your learning journey. ' +
+            'Browse through the learnings tracks here: https://learninglabs.cisco.com/login\n\n',
+        action: 'default'
+    }, 'menu_2');
+
+    // Menu option 3)
+    convo.addMessage({
+        text: 'Nothing like meeting in person at a conference, training or a hackathon. ' +
+            'Check the list of DevNet events: https://developer.cisco.com/site/devnet/events-contests/events/\n\n',
+        action: 'default'
+    }, 'menu_3');
+
+    // Cancel
+    convo.addMessage({
+        text: 'Got it, cancelling...',
+        action: 'complete',
+    }, 'action_cancel');
 
 
     controller.addDialog( convo );
