@@ -16,6 +16,21 @@ module.exports = function ( controller) {
         'stated_sam'
     );
 
+        var question = " Escolha uma das opcoes abaixo:";
+        question += "<br/> `1)` Verificar o status da rede wifi (**wifi**);"
+        question += "\n\O que voce gostaria de fazer?<br/>_(Digite um numero, escreva a **palavra chave** ou" +
+                "apenas escreva cancel)_";
+        convo.ask(question, [
+            {
+                "pattern": "1|rede|status",
+                "callback": function (response, convo) {
+                convo.say("Um momento por favor, estou coletando todas as informacoes");
+                convo.next();
+                },
+            ]);
+
+        };
+
     controller.addDialog( convo );
 
     controller.hears( 'sam', 'message,direct_message', async (bot, message) => {
@@ -25,4 +40,4 @@ module.exports = function ( controller) {
 
     controller.commandHelp.push( { command: 'sam', text: 'Pick a Favorite sam (Botkit conversations)' } );
 
-}
+};
