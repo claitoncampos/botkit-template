@@ -16,20 +16,29 @@ module.exports = function ( controller) {
         'stated_sam'
     );
 
-        var question = " Escolha uma das opcoes abaixo:";
-        question += "<br/> `1)` Verificar o status da rede wifi (**wifi**);"
-        question += "\n\O que voce gostaria de fazer?<br/>_(Digite um numero, escreva a **palavra chave** ou" +
-                "apenas escreva cancel)_";
-        convo.ask(question, [
-            {
-                "pattern": "1|rede|status",
-                "callback": function (response, convo) {
-                convo.say("Um momento por favor, estou coletando todas as informacoes");
-                convo.next();
-                },
-            ]);
+    let question = 'Tenho algumas opcoes para lhe apresentar:\n';
+    question += ' 1. Verificar o status da rede wi-fi (rede)\n';
+    question += ' 2. Verificar quantidade de pessoas logadas na rede wi-fi (pessoas)\n';
+    question += ' 3. Verificar a temperatura da loja (temperatura)\n';
+    question += ' 4. Verificar a iluminacao da loja (iluminacao)\n';
+    question += ' Para verificar qualquer das opcoes, digite o numero ou a palavra entre parenteses ou stop';
 
-        };
+    convo.ask( question, [
+        {
+            pattern: '1|rede|status',
+            handler: async (response, convo, bot) => {
+                await convo.gotoThread( 'menu_1');
+            }
+        },
+    ]);
+
+    // Menu option 1)
+    convo.addMessage({
+        text: 'Ok, um momento enquanto coleto todas as informacoes necessarias',
+        action: 'default'
+    }, 'menu_1');
+};
+
 
     controller.addDialog( convo );
 
