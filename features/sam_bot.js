@@ -16,7 +16,8 @@ module.exports = function ( controller) {
     question += '  1. Verificar se a rede wi-fi esta ativa: (rede)\n';
     question += '  2. Verificar a quantidade de pessoas logadas na rede wi-fi: (pessoas)\n';
     question += '  3. Verificar a temperatuda da loja: (temperatura)\n';
-    question += 'O que voce gostaria de ver?\n(Digite um numero, ou (palavra) or "stop")';
+    question += '  4. Verificar o status da iluminacao: (iluminacao)\n';
+    question += 'Quais das opcoes acima voce gostaria de verificar?\n(Digite um numero, ou (palavra) ou "stop")';
 
     convo.ask( question, [
         {
@@ -38,7 +39,13 @@ module.exports = function ( controller) {
             }
         },
         {
-            pattern: 'cancel|stop',
+            pattern: '4|iluminacao',
+            handler: async (response, convo, bot) => {
+                await convo.gotoThread( 'menu_4' );
+            }
+        },
+        {
+            pattern: 'cancel|stop|cancelar',
             handler: async (response, convo, bot) => {
                 await convo.gotoThread( 'action_cancel' );
             }
@@ -72,6 +79,12 @@ module.exports = function ( controller) {
             'Check the list of DevNet events: https://developer.cisco.com/site/devnet/events-contests/events/\n\n',
         action: 'default'
     }, 'menu_3');
+
+    // Menu option 4)
+    convo.addMessage({
+        text: 'Verificando o status da iluminacao da loja\n\n',
+        action: 'default'
+    }, 'menu_4');
 
     // Cancel
     convo.addMessage({
