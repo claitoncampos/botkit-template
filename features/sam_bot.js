@@ -92,7 +92,7 @@ module.exports = function ( controller) {
 
     controller.addDialog( convo );
 
-    controller.hears( 'sam', 'oi', 'bom dia', 'ola', 'message,direct_message', async (bot, message) => {
+    controller.hears( 'sam', 'message,direct_message', async (bot, message) => {
 
         await bot.beginDialog( 'sam_chat' );
     });
