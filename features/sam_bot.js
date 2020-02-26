@@ -67,22 +67,19 @@ module.exports = function ( controller) {
 
     // Menu option 2)
     convo.addMessage({
-        text: 'Learnings Labs are step-by-step tutorials. ' +
-            'They are grouped into tracks to help you on your learning journey. ' +
-            'Browse through the learnings tracks here: https://learninglabs.cisco.com/login\n\n',
+        text: 'Coletando o numero de pessoas logadas atualmente na rede wi-fi',
         action: 'default'
     }, 'menu_2');
 
     // Menu option 3)
     convo.addMessage({
-        text: 'Nothing like meeting in person at a conference, training or a hackathon. ' +
-            'Check the list of DevNet events: https://developer.cisco.com/site/devnet/events-contests/events/\n\n',
+        text: 'Verificando se a temperatura atual da loja',
         action: 'default'
     }, 'menu_3');
 
     // Menu option 4)
     convo.addMessage({
-        text: 'Verificando o status da iluminacao da loja\n\n',
+        text: 'Verificando o status da iluminacao da loja',
         action: 'default'
     }, 'menu_4');
 
@@ -95,7 +92,7 @@ module.exports = function ( controller) {
 
     controller.addDialog( convo );
 
-    controller.hears( 'sam', 'message,direct_message', async (bot, message) => {
+    controller.hears( 'sam', 'oi', 'bom dia', 'ola', 'message,direct_message', async (bot, message) => {
 
         await bot.beginDialog( 'sam_chat' );
     });
