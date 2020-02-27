@@ -63,9 +63,7 @@ module.exports = function ( controller) {
     convo.addMessage({
         text: 'Ok, por favor aguarde enquanto verifico o status da rede',
         action: 'default'
-        url: 'https://api.meraki.com/api/v0/networks/L_635570497412679069/ssids/0'
     }, 'menu_1');
-
 
     // Menu option 2)
     convo.addMessage({
