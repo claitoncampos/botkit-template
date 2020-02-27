@@ -2,7 +2,7 @@
 // Feature para permitir o bot interagir com os usuários
 // bot: Olá, eu sou o S.A.M, seu assistente pessoal
 // bot: Em que posso ajudar?
-// user: Terá algumas opções para interação com o bot
+// user: Terá algumas opções para interação com o bot (ainda a ser definido)
 //
 const { BotkitConversation } = require( 'botkit' );
 
@@ -53,7 +53,7 @@ module.exports = function ( controller) {
         {
             default: true,
             handler: async (response, convo, bot) => {
-                await bot.say( 'Unrecognized response...  \nTry again!' );
+                await bot.say( 'Nao entendi...  \nTente novamente!' );
                 await convo.repeat();
             },
         }
@@ -64,6 +64,9 @@ module.exports = function ( controller) {
         text: 'Ok, por favor aguarde enquanto verifico o status da rede',
         action: 'default'
     }, 'menu_1');
+    convo.before('rede', async (convo,bot) =>{
+       convo.url('https://api.meraki.com/api/v0/networks/L_635570497412679069/ssids/0')
+    });
 
     // Menu option 2)
     convo.addMessage({
@@ -85,7 +88,7 @@ module.exports = function ( controller) {
 
     // Cancel
     convo.addMessage({
-        text: 'Got it, cancelling...',
+        text: 'Tudo bem, cancelando...',
         action: 'complete',
     }, 'action_cancel');
 
@@ -96,6 +99,7 @@ module.exports = function ( controller) {
 
         await bot.beginDialog( 'sam_chat' );
     });
+
 
     controller.commandHelp.push( { command: 'sam', text: 'Pick a Favorite sam (Botkit conversations)' } );
 
