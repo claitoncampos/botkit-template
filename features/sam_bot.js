@@ -17,7 +17,7 @@ module.exports = function ( controller) {
     question += '  2. Verificar a quantidade de pessoas logadas na rede wi-fi: (pessoas)\n';
     question += '  3. Verificar a temperatuda da loja: (temperatura)\n';
     question += '  4. Verificar o status da iluminacao: (iluminacao)\n';
-    question += 'Quais das opcoes acima voce gostaria de verificar?\n(Digite um numero, ou (palavra) ou "stop")';
+    question += '(Digite um numero, (palavra) ou "stop")';
 
     convo.ask( question, [
         {
@@ -63,10 +63,9 @@ module.exports = function ( controller) {
     convo.addMessage({
         text: 'Ok, por favor aguarde enquanto verifico o status da rede',
         action: 'default'
+        url: 'https://api.meraki.com/api/v0/networks/L_635570497412679069/ssids/0'
     }, 'menu_1');
-    convo.before('rede', async (convo,bot) =>{
-       convo.url('https://api.meraki.com/api/v0/networks/L_635570497412679069/ssids/0')
-    });
+
 
     // Menu option 2)
     convo.addMessage({
