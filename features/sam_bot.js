@@ -10,7 +10,6 @@ module.exports = function ( controller) {
 
     const convo = new BotkitConversation( 'sam_chat', controller);
 
-    convo.say( 'Ola, eu sou o S.A.M, seu assistente pessoal' );
 
     let question = 'O que voce gostaria de verificar?:\n';
     question += '  1. Verificar se a rede wi-fi esta ativa: (rede)\n';
@@ -92,12 +91,12 @@ module.exports = function ( controller) {
 
     controller.addDialog( convo );
 
-    controller.hears( 'sam', 'message,direct_message', async (bot, message) => {
+    controller.hears( 'loja', 'message,direct_message', async (bot, message) => {
 
         await bot.beginDialog( 'sam_chat' );
     });
 
 
-    controller.commandHelp.push( { command: 'sam', text: 'Pick a Favorite sam (Botkit conversations)' } );
+    controller.commandHelp.push( { command: 'loja', text: 'Pick a Favorite sam (Botkit conversations)' } );
 
 };
